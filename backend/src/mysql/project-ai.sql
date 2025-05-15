@@ -13,10 +13,10 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Drop tables in an order that respects foreign key constraints (or use IF EXISTS)
+DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `llm_user`;
 DROP TABLE IF EXISTS `llm_models`;
 DROP TABLE IF EXISTS `llms`;
-DROP TABLE IF EXISTS `users`;
 
 -- User Table: Stores user information.
 -- The YouTube-related columns are kept as they were in the original users table;
@@ -33,6 +33,7 @@ CREATE TABLE `users` (
   `youtube_access_token` text COLLATE utf8mb4_unicode_ci,
   `youtube_refresh_token` text COLLATE utf8mb4_unicode_ci,
   `youtube_token_expires_at` timestamp NULL DEFAULT NULL,
+  `is_admin` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -79,6 +80,12 @@ CREATE TABLE `llm_user` (
   CONSTRAINT `llm_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `users`
+(`name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `is_admin`)
+VALUES
+('Bahloul Admin', 'bahloul.admin@example.com', NOW(), 'admin', NULL, NOW(), NOW(), 1),
+('Guillaume Admin', 'guillaume.admin@example.com', NOW(), 'admin', NULL, NOW(), NOW(), 1),
+('Dan User', 'dan.user@example.com', NOW(), 'user', NULL, NOW(), NOW(), 0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
