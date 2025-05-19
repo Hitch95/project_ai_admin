@@ -1,8 +1,7 @@
-import http from "http";
-import dotenv from "dotenv";
-import app from "./main.ts";
+import http from 'http';
+import dotenv from 'dotenv';
+import app from './main.ts';
 
-// Charger les variables d'environnement depuis le fichier .env
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;

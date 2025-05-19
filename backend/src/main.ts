@@ -1,15 +1,15 @@
-import cors from "cors";
-import dotenv from "dotenv";
-import express from "express";
-import type { Express, Request, Response } from "express";
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import type { Express, Request, Response } from 'express';
 
-import db from "./models/index.ts";
-import swaggerUi from "swagger-ui-express";
-import swaggerSpecs from "./swaggerConfig.ts";
-import retry from "async-retry";
+import db from './models/index.ts';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpecs from './swaggerConfig.ts';
+import retry from 'async-retry';
 
-import userRoutes from "./routes/user.routes.ts";
-import authRoutes from "./routes/auth.routes.ts";
+import userRoutes from './routes/user.routes.ts';
+import authRoutes from './routes/auth.routes.ts';
 // import LlmRoutes from "./routes/llm.routes.ts"; // I will create this route later
 // import subscriptionRoutes from "./routes/subscription.routes"; // Maybe in the future
 
@@ -19,7 +19,13 @@ const app: Express = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
+
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
 
 // Documentation Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
@@ -59,10 +65,12 @@ retry(
     maxTimeout: 5000,
   }
 )
-  .then(() => {
-  })
+  .then(() => {})
   .catch((err) => {
-    console.error('Could not connect to the database after several attempts : ', err);
+    console.error(
+      'Could not connect to the database after several attempts : ',
+      err
+    );
   });
 
 export default app;

@@ -1,9 +1,7 @@
-import { LoginUiComponent } from "@/lib/ui/login-in-component";
+import { LoginUiComponent } from '@/lib/ui/login-in-component';
 
 const Login = () => {
-    return (
-        <LoginUiComponent/>
-    )
-}
+  return <LoginUiComponent />;
+};
 
 export default Login;

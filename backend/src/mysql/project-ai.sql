@@ -83,9 +83,9 @@ CREATE TABLE `llm_user` (
 INSERT INTO `users`
 (`name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `is_admin`)
 VALUES
-('Bahloul Admin', 'bahloul.admin@example.com', NOW(), 'admin', NULL, NOW(), NOW(), 1),
-('Guillaume Admin', 'guillaume.admin@example.com', NOW(), 'admin', NULL, NOW(), NOW(), 1),
-('Dan User', 'dan.user@example.com', NOW(), 'user', NULL, NOW(), NOW(), 0);
+('Bahloul Admin', 'bahloul.admin@example.com', NOW(), '$2b$10$MiEB6D/rxPQl0dKYNng7/Oag4AIJ.0Lrl4YlwWXE97vu6APtEzgAy', NULL, NOW(), NOW(), 1),
+('Guillaume Admin', 'guillaume.admin@example.com', NOW(), '$2b$10$MiEB6D/rxPQl0dKYNng7/Oag4AIJ.0Lrl4YlwWXE97vu6APtEzgAy', NULL, NOW(), NOW(), 1),
+('Dan User', 'dan.user@example.com', NOW(), '$2b$10$54h6CgJXjtSPHeYUhpZk7OOuc.MSn64w4F0TDJ1FKl0JwJeHR7uJS', NULL, NOW(), NOW(), 0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
