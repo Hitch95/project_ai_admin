@@ -32,7 +32,7 @@ const LoginUiComponent = () => {
       });
       const result = await response.json();
       if (response.ok && result.token) {
-        // Stocke le token ou redirige
+        // Stock le token ou redirige
         // Par exemple : localStorage.setItem('token', result.token);
         alert('Connexion réussie !');
         window.location.href = '/admin/dashboard';
@@ -81,30 +81,10 @@ const LoginUiComponent = () => {
           <div>
             <button
               onClick={handleSignIn}
-              className='w-full bg-white/10 text-white font-medium px-5 py-3 rounded-full shadow hover:bg-white/20 transition mb-3  text-sm'
+              className='w-full bg-white/10 text-white font-medium px-5 py-3 rounded-full shadow hover:bg-white/20 transition mb-3  text-sm cursor-pointer'
             >
               Sign in
             </button>
-            {/* Google Sign In */}
-            <button className='w-full flex items-center justify-center gap-2 bg-gradient-to-b from-[#232526] to-[#2d2e30] rounded-full px-5 py-3 font-medium text-white shadow hover:brightness-110 transition mb-2 text-sm'>
-              <img
-                src='https://www.svgrepo.com/show/475656/google-color.svg'
-                alt='Google'
-                className='w-5 h-5'
-              />
-              Continue with Google
-            </button>
-            <div className='w-full text-center mt-2'>
-              <span className='text-xs text-gray-400'>
-                Don&apos;t have an account?{' '}
-                <a
-                  href='#'
-                  className='underline text-white/80 hover:text-white'
-                >
-                  Sign up, it&apos;s free!
-                </a>
-              </span>
-            </div>
           </div>
         </div>
       </div>

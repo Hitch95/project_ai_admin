@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "User",
+    'User',
     {
       id: {
         type: DataTypes.BIGINT.UNSIGNED,
@@ -28,6 +28,11 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: true,
       },
+      is_admin: {
+        type: DataTypes.TINYINT(1),
+        allowNull: false,
+        defaultValue: 0,
+      },
       created_at: {
         type: DataTypes.DATE,
         allowNull: true,
@@ -36,29 +41,12 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: true,
       },
-      youtube_access_token: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-      },
-      youtube_refresh_token: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-      },
-      youtube_token_expires_at: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      },
-      is_admin: { // <-- Ajout ici
-        type: DataTypes.TINYINT,
-        allowNull: false,
-        defaultValue: 0,
-      },
     },
     {
-      tableName: "users",
+      tableName: 'users',
       timestamps: true,
-      createdAt: "created_at",
-      updatedAt: "updated_at",
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
       underscored: true,
     }
   );

@@ -43,7 +43,7 @@ app.get('/', (req: Request, res: Response) => {
 const connectToDatabase = async () => {
   await db.sequelize.authenticate();
   console.log('Connection has been established successfully.');
-  await db.sequelize.sync();
+  // await db.sequelize.sync();
 };
 
 retry(

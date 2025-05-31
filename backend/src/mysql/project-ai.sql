@@ -30,9 +30,6 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `youtube_access_token` text COLLATE utf8mb4_unicode_ci,
-  `youtube_refresh_token` text COLLATE utf8mb4_unicode_ci,
-  `youtube_token_expires_at` timestamp NULL DEFAULT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
