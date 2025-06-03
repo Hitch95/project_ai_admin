@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { authClient } from '@/utils/auth/client';
+// import { authClient } from '@/utils/auth/client';
 
 const LoginUiComponent = () => {
   const [email, setEmail] = useState('');
