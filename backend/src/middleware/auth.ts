@@ -1,9 +1,29 @@
-import AuthJwtSrv from "../services/auth.service.ts";
+import { Request, Response, NextFunction } from 'express';
+//@ts-expect-error
+import { auth } from '../utils/auth.ts';
 
-export const authJwt = (req, res, next) => {
-  const tokenValidity = AuthJwtSrv.verifyAndDecode(req, res);
-  if (!tokenValidity.valid) {
-    return res.status(401).json({ error: "Invalid token" });
+export const requireAuth = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const session = await auth.api.getSession({
+      headers: req.headers as any,
+    });
+
+    if (!session) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    // Vérifier que l'utilisateur est admin
+    if (!session.user.is_admin) {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+
+    req.user = session.user;
+    next();
+  } catch (error) {
+    return res.status(401).json({ error: 'Invalid session' });
   }
-  return next();
 };

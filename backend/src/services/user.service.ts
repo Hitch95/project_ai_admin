@@ -1,105 +1,135 @@
+//@ts-expect-error
 import db from '../models/index.ts';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 
-const { User, Llm, Role } = db;
+const { User, Llm } = db;
+
+interface CreateUserData {
+  name: string;
+  email: string;
+  password: string;
+  is_admin?: boolean;
+}
+
+interface UpdateUserData {
+  name?: string;
+  email?: string;
+  password?: string;
+  is_admin?: boolean;
+}
 
 class UserService {
-  static async createUser(data: { name: string; email: string; password: string; role: string }) {
-    const { name, email, password, role } = data;
+  static async createUser(data: CreateUserData) {
+    const { name, email, password, is_admin = false } = data;
 
-    // Vérifiez si le rôle existe
-    const _role = await Role.findOne({ where: { name: role } });
-    if (!_role) {
-      throw new Error('Role not found');
+    // Check if the email already exists in the db
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      throw new Error('Email already exists');
     }
 
-    // Hacher le mot de passe
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const rememberToken = crypto.randomBytes(20).toString('hex');
 
     const user = await User.create({
       name,
       email,
       password: hashedPassword,
-      role_id: _role.id,
+      is_admin,
       remember_token: rememberToken,
-      created_at: new Date(),
-      updated_at: new Date()
     });
 
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      created_at: user.created_at,
-      updated_at: user.updated_at,
-      role: {
-        id: _role.id,
-        name: _role.name
-      }
-    };
+    const userResponse = user.toJSON();
+    delete userResponse.password;
+    return userResponse;
   }
 
-  static async getUserById(id) {
-    const user = await User.findByPk(id, {
-      include: [
-        {
-          model: Role,
-          attributes: ['id', 'name']
-        }
-      ]
-    });
+  static async getUserById(id: string | number) {
+    const userId = typeof id === 'string' ? parseInt(id, 10) : id;
+
+    if (isNaN(userId)) {
+      throw new Error('Invalid user ID');
+    }
+
+    const user = await User.findByPk(userId);
+
     if (!user) {
       throw new Error('User not found');
     }
-  
+
     const userData = user.toJSON();
-    console.log(userData)
-    userData.subscription = (userData.SubscriptionUsers && userData.SubscriptionUsers.length > 0) ? userData.SubscriptionUsers[0].Subscription.subscription : null;
-    delete userData.SubscriptionUsers;
-    
+    delete userData.password;
     return userData;
   }
-  
-  
 
-  static async updateUser(id, data) {
-    const { name, email, password, role } = data;
+  static async updateUser(id: string | number, data: UpdateUserData) {
+    const { name, email, password, is_admin } = data;
 
-    const user = await User.findByPk(id);
+    const userId = typeof id === 'string' ? parseInt(id, 10) : id;
+
+    if (isNaN(userId)) {
+      throw new Error('Invalid user ID');
+    }
+
+    const user = await User.findByPk(userId);
     if (!user) {
       throw new Error('User not found');
     }
 
-    const _role = await Role.findOne({ where: { name: role } });
-    if (!_role) {
-      throw new Error('Role not found');
-    }
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) {
-      throw new Error('Incorrect password');
+    if (email && email !== user.email) {
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser) {
+        throw new Error('Email already exists');
+      }
     }
 
-    await user.update({
-      name,
-      email,
-      role_id: _role.id,
-      updated_at: new Date()
+    const updateData: any = {
+      updated_at: new Date(),
+    };
+
+    if (name !== undefined) updateData.name = name;
+    if (email !== undefined) updateData.email = email;
+    if (is_admin !== undefined) updateData.is_admin = is_admin;
+
+    if (password) {
+      updateData.password = await bcrypt.hash(password, 10);
+    }
+
+    await user.update(updateData);
+
+    const updatedUser = user.toJSON();
+    delete updatedUser.password;
+    return updatedUser;
+  }
+
+  static async deleteUser(id: string | number) {
+    const userId = typeof id === 'string' ? parseInt(id, 10) : id;
+
+    if (isNaN(userId)) {
+      throw new Error('Invalid user ID');
+    }
+
+    const user = await User.findByPk(userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Delete all LLMs associated with the user
+    // await Llm.destroy({ where: { user_id: userId } });
+
+    // Delete the user
+    await user.destroy();
+  }
+
+  static async getAllUsers() {
+    const users = await User.findAll({
+      attributes: { exclude: ['password', 'remember_token'] },
+      order: [['created_at', 'DESC']],
     });
 
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      created_at: user.created_at,
-      updated_at: user.updated_at,
-      role: {
-        id: _role.id,
-        name: _role.name
-      }
-    };
+    return users;
   }
 }
 
