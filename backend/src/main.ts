@@ -22,16 +22,14 @@ dotenv.config();
 
 const app: Express = express();
 
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
+
 // app.all('/api/auth/{*any}', toNodeHandler(auth));
-// Better-Auth avec debug détaillé
-// 🔧 TEST 1: Route de test simple pour vérifier le routage
-app.get('/api/auth/test-route', (req: Request, res: Response) => {
-  console.log('✅ Test route intercepted');
-  res.json({
-    message: 'Routing works!',
-    timestamp: new Date().toISOString(),
-  });
-});
 
 // 🔧 Better-Auth with debug middleware combined
 app.all(
@@ -42,19 +40,12 @@ app.all(
     console.log('🔍 Params:', req.params);
     console.log('📡 Better-Auth manual handler:', req.method, req.originalUrl);
 
-    // Test si Better-Auth est bien initialisé
-    if (typeof auth === 'undefined') {
-      console.error('❌ Auth object is undefined!');
-      res.status(500).json({ error: 'Auth not initialized' });
-      return;
-    }
-
     try {
       const handler = toNodeHandler(auth);
-      console.log('✅ toNodeHandler created');
+      console.log('toNodeHandler created successfully');
       handler(req, res);
     } catch (error) {
-      console.error('❌ Better-Auth error:', error);
+      console.error('Better-Auth error : ', error);
       res.status(500).json({
         error: 'Auth handler error',
         details: (error as Error).message,
@@ -65,13 +56,6 @@ app.all(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use(
-  cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
-  })
-);
 
 // Documentation Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
