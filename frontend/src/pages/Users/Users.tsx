@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/table';
 import { Search, UserCog, Trash2, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { type User as UserType } from '@/types/user';
+import { type User as UserType } from '@/utils/types/user';
 import { usersApi } from '@/api/users/users';
 import { CreateUserDialog } from '@/lib/ui/create-user-dialog';
 

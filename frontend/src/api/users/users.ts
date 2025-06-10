@@ -1,4 +1,4 @@
-import type { User } from '@/types/user';
+import type { User } from '@/utils/types/user';
 
 // Mock API for development - replace with your actual backend endpoints
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';

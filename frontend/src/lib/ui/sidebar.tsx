@@ -1,6 +1,6 @@
 'use client';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { useSidebar } from './sidebar-provider';
 import { cn } from '@/lib/utils';
 import {
@@ -11,17 +11,42 @@ import {
   Menu,
   Settings,
 } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
-// import { signOut, useSession } from '@/lib/auth-client';
+import useAuth from '@/utils/hooks/useAuth';
+import { useEffect } from 'react';
 
 export function Sidebar() {
   const location = useLocation();
   const { isOpen, toggle } = useSidebar();
-  //   const { data: session } = useSession();
+  const {
+    user,
+    isAuthenticated,
+    isPending,
+    sessionError,
+    // refetchSession,
+    signOut,
+  } = useAuth();
 
-  //   const handleSignOut = async () => {
-  //     await signOut();
-  //   };
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+    }
+    if (isPending) {
+      console.log('Loading...');
+    }
+    if (sessionError) {
+      console.log(`Error: ${sessionError.message}`);
+    }
+    if (!isAuthenticated) {
+      console.log('Not authenticated');
+    }
+  }, [isAuthenticated, isPending, sessionError, user]);
+
+  const handleSignOut = async () => {
+    await signOut();
+    // Redirect to login page
+  };
 
   return (
     <>
@@ -42,7 +67,7 @@ export function Sidebar() {
         )}
       >
         <div className='flex h-14 items-center border-b px-4'>
-          <span className='text-lg font-semibold'>Sambo Admin</span>
+          <span className='text-lg font-semibold'>Admin Dashboard</span>
           <Button
             variant='ghost'
             size='icon'
@@ -93,16 +118,15 @@ export function Sidebar() {
               </Link>
             </nav>
             <div className='px-3 py-2 text-sm text-muted-foreground'>
-              Signed in as .............
-              {/* {session?.user?.email} */}
+              Signed in as {user?.name}
             </div>
             <Button
               variant='ghost'
               className='w-full justify-start gap-3 text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-              //   onClick={handleSignOut}
+              onClick={handleSignOut}
             >
               <LogOut className='h-5 w-5' />
-              <span>Sign out</span>
+              <span className='cursor-pointer'>Sign out</span>
             </Button>
           </div>
         </div>
