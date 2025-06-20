@@ -36,6 +36,13 @@ export const auth = betterAuth({
       },
     },
   },
+  trustedOrigins(request) {
+    return [
+      'http://localhost:3000',
+      'http://localhost:5173',
+      // 'https://your-production-url.com',
+    ];
+  },
 });
 
 console.log('Better-Auth initialized successfully');

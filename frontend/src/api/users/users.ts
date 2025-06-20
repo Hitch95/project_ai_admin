@@ -1,49 +1,30 @@
 import type { User } from '@/utils/types/user';
 
-// Mock API for development - replace with your actual backend endpoints
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const backendUrl =
+  import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:3000';
 
 export const usersApi = {
   async getUsers(): Promise<User[]> {
-    // Mock data based on your database schema
-    return [
-      {
-        id: 1,
-        name: 'Bahloul Admin',
-        email: 'bahloul.admin@example.com',
-        email_verified_at: new Date().toISOString(),
-        password:
-          '$2b$10$MiEB6D/rxPQl0dKYNng7/Oag4AIJ.0Lrl4YlwWXE97vu6APtEzgAy',
-        remember_token: null,
-        is_admin: true,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      },
-      {
-        id: 2,
-        name: 'Guillaume Admin',
-        email: 'guillaume.admin@example.com',
-        email_verified_at: new Date().toISOString(),
-        password:
-          '$2b$10$MiEB6D/rxPQl0dKYNng7/Oag4AIJ.0Lrl4YlwWXE97vu6APtEzgAy',
-        remember_token: null,
-        is_admin: true,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      },
-      {
-        id: 3,
-        name: 'Dan User',
-        email: 'dan.user@example.com',
-        email_verified_at: new Date().toISOString(),
-        password:
-          '$2b$10$54h6CgJXjtSPHeYUhpZk7OOuc.MSn64w4F0TDJ1FKl0JwJeHR7uJS',
-        remember_token: null,
-        is_admin: false,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      },
-    ];
+    try {
+      const response = await fetch(`http://localhost:3000/users`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status : ${response.status}`);
+      }
+
+      const users = await response.json();
+      console.log('Users : ', users);
+      return users;
+    } catch (error) {
+      console.error('Error fetching users : ', error);
+      throw error;
+    }
   },
 
   async getUser(id: number): Promise<User> {
@@ -57,7 +38,7 @@ export const usersApi = {
 
   async createUser(user: Partial<User>): Promise<User> {
     // In real implementation, this would call your backend
-    const response = await fetch(`${API_BASE}/users`, {
+    const response = await fetch(`${backendUrl}/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -71,7 +52,7 @@ export const usersApi = {
   },
 
   async updateUser(id: number, user: Partial<User>): Promise<User> {
-    const response = await fetch(`${API_BASE}/users/${id}`, {
+    const response = await fetch(`${backendUrl}/users/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -85,7 +66,7 @@ export const usersApi = {
   },
 
   async deleteUser(id: number): Promise<void> {
-    const response = await fetch(`${API_BASE}/users/${id}`, {
+    const response = await fetch(`${backendUrl}/users/${id}`, {
       method: 'DELETE',
     });
     if (!response.ok) {
