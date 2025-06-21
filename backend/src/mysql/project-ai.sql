@@ -15,6 +15,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `llm_user`;
 DROP TABLE IF EXISTS `llm_models`;
 DROP TABLE IF EXISTS `llms`;
+DROP TABLE IF EXISTS `users`;
 /* Tables Laravel */
 DROP TABLE IF EXISTS `sessions`;
 DROP TABLE IF EXISTS `password_reset_tokens`;
@@ -24,7 +25,6 @@ DROP TABLE IF EXISTS `session`;
 DROP TABLE IF EXISTS `account`;
 DROP TABLE IF EXISTS `verification`;
 DROP TABLE IF EXISTS `user`;
-DROP TABLE IF EXISTS `users`;
 DROP VIEW IF EXISTS `user`;
 
 /* 👥 Table Users (structure Laravel + colonne is_admin pour admin) */

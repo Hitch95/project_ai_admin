@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # MySQL DB
+  mysql:
+    image: mysql:8.0.42
+    container_name: ai-factory-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - '3307:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./src/mysql/project-ai.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ai-factory-network
+
+  # Node.js Backend
+  backend:
+    build: .
+    container_name: ai-factory-backend
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: production
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ${DB_DATABASE}
+      DB_USER: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_ROOT_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - mysql
+    networks:
+      - ai-factory-network
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  mysql_data:
+
+networks:
+  ai-factory-network:
+    driver: bridge
