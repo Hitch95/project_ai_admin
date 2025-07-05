@@ -13,7 +13,8 @@ import swaggerSpecs from './swaggerConfig.ts';
 import db from './models/index.ts';
 //@ts-expect-error
 import userRoutes from './routes/user.routes.ts';
-// import LlmRoutes from "./routes/llm.routes.ts"; // I will create this route later
+// @ts-ignore
+import LlmRoutes from "./routes/llm.route.ts"; // I will create this route later
 // import subscriptionRoutes from "./routes/subscription.routes"; // Maybe in the future
 //@ts-expect-error
 import { auth } from './utils/auth.ts'; // Import the auth configuration
@@ -62,7 +63,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 // Routes
 app.use('/users', userRoutes);
-// app.use('/llm', LlmRoutes); // I will create this route
+app.use('/llm', LlmRoutes);
 // app.use('/subscriptions', subscriptionRoutes); // Check with Dan if necessary or not
 
 app.get('/', (req: Request, res: Response) => {

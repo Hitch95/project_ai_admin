@@ -1,4 +1,6 @@
-export default (sequelize, DataTypes) => {
+import {Sequelize, DataTypes} from "sequelize";
+
+export default (sequelize:Sequelize) => {
   const User = sequelize.define(
     'User',
     {
@@ -29,7 +31,7 @@ export default (sequelize, DataTypes) => {
         allowNull: true,
       },
       is_admin: {
-        type: DataTypes.TINYINT(1),
+        type: DataTypes.TINYINT(),
         allowNull: false,
         defaultValue: 0,
       },
@@ -51,11 +53,7 @@ export default (sequelize, DataTypes) => {
     }
   );
 
-  User.associate = function (models: unknown) {
-    // Exemple d'association (à adapter selon vos besoins)
-    // User.belongsToMany(models.Llm, { through: models.LlmUser, foreignKey: 'user_id' });
-    // User.hasMany(models.LlmUser, { foreignKey: 'user_id' });
-  };
+
 
   return User;
 };
