@@ -1,22 +1,29 @@
 import { DataTypes, Sequelize } from "sequelize";
+
 export default (sequelize: Sequelize) => {
-  const Llm = sequelize.define(
-    "Llm",
+  const LlmModel = sequelize.define(
+    "LlmModel",
     {
       id: {
         type: DataTypes.BIGINT.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
       },
+      llm_id: {
+        type: DataTypes.BIGINT.UNSIGNED,
+        allowNull: false,
+        references: {
+          model: 'Llms',
+          key: 'id'
+        }
+      },
       name: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        unique: true,
       },
       slug: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        unique: true,
       },
       created_at: {
         type: DataTypes.DATE,
@@ -28,15 +35,13 @@ export default (sequelize: Sequelize) => {
       },
     },
     {
-      tableName: "llms",
+      tableName: "llm_models",
       timestamps: true,
       createdAt: "created_at",
       updatedAt: "updated_at",
-      underscored: true,
     }
   );
 
 
-
-  return Llm;
+  return LlmModel;
 };
