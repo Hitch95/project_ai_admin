@@ -1,7 +1,7 @@
 //@ts-expect-error
 import db from '../models/index.ts';
 
-const { User, Llm } = db;
+const { Llm } = db;
 
 
 interface CreateLlmData {
