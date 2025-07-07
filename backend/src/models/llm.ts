@@ -37,11 +37,7 @@ export default (sequelize: Sequelize) => {
     }
   );
 
-  Llm.associate = function (models: any) {
-    // Exemple d'association (à adapter selon vos besoins)
-    // Llm.hasMany(models.LlmModel, { foreignKey: 'llm_id' });
-    // Llm.belongsToMany(models.User, { through: models.LlmUser, foreignKey: 'llm_id' });
-  };
+
 
   return Llm;
 };
