@@ -1,8 +1,6 @@
-//@ts-expect-error
-import db from '../models/index.ts';
+import db from '../models/index';
 
 const { Llm } = db;
-
 
 interface CreateLlmData {
   name: string;
@@ -25,7 +23,15 @@ interface UpdateLlmData {
 
 class LlmService {
   static async createLlm(data: CreateLlmData) {
-    const { name, slug, description, is_active = true, api_base_url, api_key, created_by } = data;
+    const {
+      name,
+      slug,
+      description,
+      is_active = true,
+      api_base_url,
+      api_key,
+      created_by,
+    } = data;
 
     // Vérifier si le slug existe déjà
     const existingLlm = await Llm.findOne({ where: { slug } });
@@ -40,7 +46,7 @@ class LlmService {
       is_active,
       api_base_url,
       api_key,
-      created_by
+      created_by,
     });
 
     return llm;
@@ -57,7 +63,7 @@ class LlmService {
   }
 
   static async getAllLlms() {
-      return await Llm.findAll();
+    return await Llm.findAll();
   }
 
   static async updateLlm(id: string, data: UpdateLlmData) {

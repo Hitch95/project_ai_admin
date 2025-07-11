@@ -1,5 +1,4 @@
 import { Router } from 'express';
-// @ts-ignore
 import { LlmModelController } from '../controllers/llm-model.controller';
 
 const router = Router();

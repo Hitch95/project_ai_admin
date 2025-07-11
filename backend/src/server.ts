@@ -1,7 +1,6 @@
 import http from 'http';
 import dotenv from 'dotenv';
-//@ts-expect-error
-import app from './main.ts';
+import app from './main';
 
 dotenv.config();
 

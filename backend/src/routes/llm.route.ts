@@ -13,12 +13,12 @@ router.get('/', LlmController.getAllLlms);
 router.get('/:id', LlmController.getLlmById);
 
 // Route pour créer un nouveau LLM
-router.post('/',  validateLlmInput, LlmController.createLlm);
+router.post('/', validateLlmInput, LlmController.createLlm);
 
 // Route pour mettre à jour un LLM existant
 router.put('/:id', validateLlmInput, LlmController.updateLlm);
 
 // Route pour supprimer un LLM
-router.delete('/:id',  LlmController.deleteLlm);
+router.delete('/:id', LlmController.deleteLlm);
 
 export default router;

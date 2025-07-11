@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express';
-//@ts-expect-error
-import LlmService from '../services/llm.service.ts';
+import LlmService from '../services/llm.service';
 
 class LlmController {
   static async createLlm(req: Request, res: Response): Promise<void> {

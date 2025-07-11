@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
+    "target": "esnext",
+    "module": "esnext",
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"]
     },
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "node",
     "outDir": "dist",
     "rootDir": "src",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,

@@ -1,5 +1,4 @@
-//@ts-expect-error
-import db from '../models/index.ts';
+import db from '../models/index';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 

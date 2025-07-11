@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express';
-//@ts-expect-error
-import UserService from '../services/user.service.ts';
+import UserService from '../services/user.service';
 
 class UserController {
   static async createUser(req: Request, res: Response): Promise<void> {

@@ -1,9 +1,7 @@
 import express from 'express';
 import { body, param } from 'express-validator';
-//@ts-expect-error
-import UserController from '../controllers/user.controller.ts';
-//@ts-expect-error
-import { checkValidationErrors } from '../middleware/validators.ts';
+import UserController from '../controllers/user.controller';
+import { checkValidationErrors } from '../middleware/validators';
 
 const router = express.Router();
 

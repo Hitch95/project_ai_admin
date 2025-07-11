@@ -6,20 +6,14 @@ import retry from 'async-retry';
 import { toNodeHandler } from 'better-auth/node';
 
 import swaggerUi from 'swagger-ui-express';
-//@ts-expect-error
-import swaggerSpecs from './swaggerConfig.ts';
+import swaggerSpecs from './swaggerConfig';
 
-//@ts-expect-error
-import db from './models/index.ts';
-//@ts-expect-error
-import userRoutes from './routes/user.routes.ts';
-// @ts-ignore
-import LlmRoutes from "./routes/llm.route.ts";
-// @ts-ignore
-import LlmModelRoutes from "./routes/llm-model.routes.ts"; // Ajout des routes des modèles LLM
+import db from './models/index';
+import userRoutes from './routes/user.routes';
+import LlmRoutes from './routes/llm.route';
+import LlmModelRoutes from './routes/llm-model.routes'; // Ajout des routes des modèles LLM
 // import subscriptionRoutes from "./routes/subscription.routes"; // Maybe in the future
-//@ts-expect-error
-import { auth } from './utils/auth.ts'; // Import the auth configuration
+import { auth } from './utils/auth'; // Import the auth configuration
 
 dotenv.config();
 

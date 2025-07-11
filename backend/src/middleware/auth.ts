@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-//@ts-expect-error
-import { auth } from '../utils/auth.ts';
+import { auth } from '../utils/auth';
 
 export const requireAuth = async (
   req: Request,
