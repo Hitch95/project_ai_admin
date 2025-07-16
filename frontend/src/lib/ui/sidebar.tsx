@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import {
   LayoutDashboard,
   Users,
-  BarChart3,
+  Bot,
   LogOut,
   Menu,
   Settings,
@@ -14,7 +14,9 @@ import {
 
 import { Button } from '@/components/ui/button';
 import useAuth from '@/utils/hooks/useAuth';
-import { useEffect } from 'react';
+import { usersApi } from '@/api/users/users';
+import { llmsApi } from '@/api/llms/llms';
+import { useEffect, useState } from 'react';
 
 export function Sidebar() {
   const location = useLocation();
@@ -47,6 +49,50 @@ export function Sidebar() {
     await signOut();
     // Redirect to login page
   };
+
+  const [usersCount, setUsersCount] = useState(0);
+  const [llmsCount, setLlmsCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const fetchedUsers = await usersApi.getUsers();
+        setUsersCount(fetchedUsers.length);
+        console.log('Users loaded:', fetchedUsers.length);
+      } catch (error) {
+        console.error('Failed to load users:', error);
+      }
+    };
+    const fetchLlms = async () => {
+      try {
+        const fetchedLlms = await llmsApi.getLlms();
+        setLlmsCount(fetchedLlms.length);
+        console.log('LLMs loaded:', fetchedLlms.length);
+      } catch (error) {
+        console.error('Failed to load LLMs:', error);
+      }
+    };
+    fetchUsers();
+    fetchLlms();
+    setLoading(false);
+  }, []);
+
+  const navItems = [
+    { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
+    {
+      name: 'Users',
+      href: '/admin/dashboard/users',
+      icon: Users,
+      badge: usersCount > 0 ? usersCount : 0,
+    },
+    {
+      name: 'LLM',
+      href: '/admin/dashboard/llm',
+      icon: Bot,
+      badge: llmsCount > 0 ? llmsCount : 0,
+    },
+  ];
 
   return (
     <>
@@ -134,9 +180,3 @@ export function Sidebar() {
     </>
   );
 }
-
-const navItems = [
-  { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-  { name: 'Users', href: '/admin/dashboard/users', icon: Users, badge: '3' },
-  { name: 'LLM', href: '/admin/dashboard/llm', icon: BarChart3, badge: '3' },
-];

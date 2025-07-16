@@ -37,7 +37,6 @@ export const usersApi = {
   },
 
   async createUser(user: Partial<User>): Promise<User> {
-    // In real implementation, this would call your backend
     const response = await fetch(`${backendUrl}/users`, {
       method: 'POST',
       headers: {
@@ -63,6 +62,33 @@ export const usersApi = {
       throw new Error('Failed to update user');
     }
     return response.json();
+  },
+
+  // Dans users.ts API
+  async promoteToAdmin(userId: number): Promise<void> {
+    try {
+      // 1. Récupérer le user de la table "users"
+      const user = await this.getUser(userId);
+
+      // 2. Créer l'admin dans Better-Auth via ton endpoint
+      const response = await fetch(`${backendUrl}/api/auth/sign-up/email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: user.name,
+          email: user.email,
+          password: 'temp-admin-password', // Ou générer un password
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to create admin');
+
+      // 3. Mettre à jour is_admin = true dans table "users"
+      await this.updateUser(userId, { is_admin: true });
+    } catch (error) {
+      console.error('Failed to promote user to admin:', error);
+      throw error;
+    }
   },
 
   async deleteUser(id: number): Promise<void> {

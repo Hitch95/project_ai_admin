@@ -12,7 +12,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Search, UserCog, Trash2, Shield } from 'lucide-react';
+import {
+  Search,
+  UserCog,
+  Trash2,
+  Shield,
+  User,
+  ShieldUser,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { type User as UserType } from '@/utils/types/user';
 import { usersApi } from '@/api/users/users';
@@ -128,11 +135,21 @@ export default function Users() {
                           </>
                         ) : (
                           <>
-                            <span className='h-4 w-4 text-gray-500'>
-                              User Icon
-                            </span>
                             <span className='text-gray-700'>User</span>
+                            <span className='h-4 w-4 text-gray-500'>
+                              <User className='h-4 w-4' />
+                            </span>
                           </>
+                        )}
+                        {!user.is_admin && (
+                          <Button
+                            size='sm'
+                            className='cursor-pointer'
+                            onClick={() => usersApi.promoteToAdmin(user.id)}
+                          >
+                            Make Admin
+                            <ShieldUser className='h-4 w-4 ml-1' />
+                          </Button>
                         )}
                       </div>
                     </TableCell>
@@ -162,7 +179,7 @@ export default function Users() {
                           variant='ghost'
                           size='icon'
                           onClick={() => handleDeleteUser(user.id)}
-                          className='text-red-600 hover:text-red-700'
+                          className='text-red-600 hover:text-red-700 cursor-pointer'
                         >
                           <Trash2 className='h-4 w-4' />
                           <span className='sr-only'>Delete user</span>

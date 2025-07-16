@@ -15,13 +15,13 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from '@/components/ui/select';
 import { UserPlus } from 'lucide-react';
 import { usersApi } from '@/api/users/users';
 
@@ -42,17 +42,18 @@ export function CreateUserDialog({ onUserCreated }: CreateUserDialogProps) {
       name: formData.get('name') as string,
       email: formData.get('email') as string,
       password: formData.get('password') as string,
-      is_admin: formData.get('role') === 'admin',
+      is_admin: false, // Default to false, can be changed later
     };
 
     try {
       await usersApi.createUser(userData);
+      // const form = e.currentTarget;
+      // form.reset();
+
       setOpen(false);
       onUserCreated();
-      // Reset form
-      e.currentTarget.reset();
     } catch (error) {
-      console.error('Failed to create user:', error);
+      console.error('Failed to create user : ', error);
     } finally {
       setIsLoading(false);
     }
@@ -61,7 +62,7 @@ export function CreateUserDialog({ onUserCreated }: CreateUserDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
+        <Button className='cursor-pointer'>
           <UserPlus className='mr-2 h-4 w-4' />
           Add User
         </Button>
@@ -105,7 +106,7 @@ export function CreateUserDialog({ onUserCreated }: CreateUserDialogProps) {
               />
             </div>
 
-            <div className='space-y-2'>
+            {/* <div className='space-y-2'>
               <Label htmlFor='role'>Role</Label>
               <Select name='role' required>
                 <SelectTrigger id='role'>
@@ -116,17 +117,22 @@ export function CreateUserDialog({ onUserCreated }: CreateUserDialogProps) {
                   <SelectItem value='admin'>Administrator</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
           <DialogFooter>
             <Button
               type='button'
               variant='outline'
+              className='cursor-pointer'
               onClick={() => setOpen(false)}
             >
               Cancel
             </Button>
-            <Button type='submit' disabled={isLoading}>
+            <Button
+              type='submit'
+              disabled={isLoading}
+              className='cursor-pointer'
+            >
               {isLoading ? 'Creating...' : 'Create User'}
             </Button>
           </DialogFooter>

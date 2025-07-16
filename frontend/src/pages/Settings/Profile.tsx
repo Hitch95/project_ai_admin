@@ -77,8 +77,12 @@ export default function ProfileSettings() {
               </div>
             </div>
             <div className='flex justify-end gap-2'>
-              <Button variant='outline'>Reset</Button>
-              <Button type='submit'>Save Changes</Button>
+              <Button variant='outline' className='cursor-pointer'>
+                Reset
+              </Button>
+              <Button type='submit' className='cursor-pointer'>
+                Save Changes
+              </Button>
             </div>
           </form>
         </CardContent>

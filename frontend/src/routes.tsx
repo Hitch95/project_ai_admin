@@ -1,6 +1,8 @@
 import type React from 'react';
 import { Routes, Route, Navigate } from 'react-router';
+import { Loader } from 'lucide-react';
 import { DashboardLayout } from '@/lib/ui/dashboard-layout';
+
 import Home from '@/pages/Home';
 import Login from '@/pages/Login/Login';
 import User from '@/pages/Users/Users';
@@ -8,46 +10,59 @@ import UserDetail from '@/pages/Users/UserDetail';
 import Llm from '@/pages/Llm/Llm';
 import LlmDetail from '@/pages/Llm/LlmDetail';
 import ProfileSettings from './pages/Settings/Profile';
+import useAuth from './utils/hooks/useAuth';
 
-// Hook pour vérifier l'authentification (à adapter selon ton système)
-// function useAuth() {
-//   // Remplace par ta logique d'auth (localStorage, context, etc.)
-//   const token = localStorage.getItem('authToken');
-//   return { isAuthenticated: !!token, isLoading: false };
-// }
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const {
+    isPending,
+    user,
+    isAuthenticated,
+    session,
+    sessionError,
+    refetchSession,
+  } = useAuth();
 
-// function ProtectedRoute({ children }: { children: React.ReactNode }) {
-//   // const { isAuthenticated, isLoading } = useAuth();
+  if (isPending) {
+    console.log('Loading...');
+    return (
+      <>
+        <Loader className='animate-spin mx-auto my-20 h-10 w-10 text-gray-500' />
+      </>
+    );
+  }
+  if (user) {
+    console.log(user);
+  }
+  if (session) {
+    console.log('Session : ', session);
+  }
+  if (sessionError) {
+    console.error(`Error: ${sessionError.message}`);
+    return <Navigate to='/login' replace />;
+  }
+  if (!isAuthenticated) {
+    console.error('Not authenticated');
+    return <Navigate to='/login' replace />;
+  }
 
-//   if (isLoading) {
-//     return (
-//       <div className='flex items-center justify-center min-h-screen'>
-//         Loading...
-//       </div>
-//     );
-//   }
-
-//   if (!isAuthenticated) {
-//     return <Navigate to='/login' replace />;
-//   }
-
-//   return <>{children}</>;
-// }
+  return <>{children}</>;
+};
 
 function PublicRoute({ children }: { children: React.ReactNode }) {
-  // const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isPending } = useAuth();
 
-  // if (isLoading) {
-  //   return (
-  //     <div className='flex items-center justify-center min-h-screen'>
-  //       Loading...
-  //     </div>
-  //   );
-  // }
+  if (isPending) {
+    return (
+      <div className='flex items-center justify-center min-h-screen'>
+        Loading...
+        <Loader className='animate-spin mx-auto my-20 h-10 w-10 text-gray-500' />
+      </div>
+    );
+  }
 
-  // if (isAuthenticated) {
-  //   return <Navigate to='/admin/dashboard' replace />;
-  // }
+  if (isAuthenticated) {
+    return <Navigate to='/admin/dashboard' replace />;
+  }
 
   return <>{children}</>;
 }
@@ -72,9 +87,9 @@ export function AppRoutes() {
       <Route
         path='/admin/dashboard'
         element={
-          // <ProtectedRoute>
-          <DashboardLayout />
-          // </ProtectedRoute>
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
         }
       >
         {/* Dashboard home page */}
