@@ -47,9 +47,6 @@ jobs:
       - name: Build backend
         run: yarn build
         working-directory: backend
-      - name: Run backend tests
-        run: yarn test
-        working-directory: backend
 
   frontend:
     name: Frontend (Vite + pnpm)

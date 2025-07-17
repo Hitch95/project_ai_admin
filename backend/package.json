@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nodemon --watch src --exec tsx src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test": "vitest"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -33,6 +34,7 @@
     "swagger-ui-express": "^5.0.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vitest": "^3.2.4"
   }
 }
