@@ -1,24 +1,32 @@
-import express from 'express';
-// @ts-ignore
+import express, { Request, Response } from 'express';
 import LlmController from '../controllers/llm.controller';
-// @ts-ignore
 import { validateLlmInput } from '../middleware/validators';
 
 const router = express.Router();
 
 // Route pour obtenir tous les LLMs
-router.get('/', LlmController.getAllLlms);
+router.get('/', (req: Request, res: Response) =>
+  LlmController.getAllLlms(req, res)
+);
 
 // Route pour obtenir un LLM spécifique par ID
-router.get('/:id', LlmController.getLlmById);
+router.get('/:id', (req: Request, res: Response) =>
+  LlmController.getLlmById(req, res)
+);
 
 // Route pour créer un nouveau LLM
-router.post('/', validateLlmInput, LlmController.createLlm);
+router.post('/', validateLlmInput, (req: Request, res: Response) =>
+  LlmController.createLlm(req, res)
+);
 
 // Route pour mettre à jour un LLM existant
-router.put('/:id', validateLlmInput, LlmController.updateLlm);
+router.put('/:id', validateLlmInput, (req: Request, res: Response) =>
+  LlmController.updateLlm(req, res)
+);
 
 // Route pour supprimer un LLM
-router.delete('/:id', LlmController.deleteLlm);
+router.delete('/:id', (req: Request, res: Response) =>
+  LlmController.deleteLlm(req, res)
+);
 
 export default router;
