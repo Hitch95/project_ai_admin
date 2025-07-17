@@ -37,6 +37,10 @@ jobs:
           node-version: '24.4.1'
           cache: 'yarn'
           cache-dependency-path: backend/yarn.lock
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Prepare Yarn 4.6.0
+        run: corepack prepare yarn@4.6.0 --activate
       - name: Install dependencies
         run: yarn install --frozen-lockfile
         working-directory: backend
