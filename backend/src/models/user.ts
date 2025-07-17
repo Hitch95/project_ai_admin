@@ -1,4 +1,6 @@
-export default (sequelize, DataTypes) => {
+import { Sequelize, DataTypes, ModelCtor, Model } from 'sequelize';
+
+export default (sequelize: Sequelize, DataTypes: any) => {
   const User = sequelize.define(
     'User',
     {
@@ -55,11 +57,12 @@ export default (sequelize, DataTypes) => {
     }
   );
 
-  User.associate = function (models: unknown) {
-    // Exemple d'association (à adapter selon vos besoins)
-    // User.belongsToMany(models.Llm, { through: models.LlmUser, foreignKey: 'user_id' });
-    // User.hasMany(models.LlmUser, { foreignKey: 'user_id' });
-  };
+  (User as ModelCtor<Model<any, any>> & { associate?: Function }).associate =
+    function (models: unknown) {
+      // Exemple d'association (à adapter selon vos besoins)
+      // User.belongsToMany(models.Llm, { through: models.LlmUser, foreignKey: 'user_id' });
+      // User.hasMany(models.LlmUser, { foreignKey: 'user_id' });
+    };
 
   return User;
 };
