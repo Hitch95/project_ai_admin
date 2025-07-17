@@ -24,17 +24,20 @@ const Home = () => {
         <h1 className='text-2xl md:text-3xl font-bold tracking-tight'>
           Admin Dashboard
         </h1>
-        <p className='text-muted-foreground'>
-          Welcome to your admin control panel. Monitor and manage your platform.
-        </p>
       </div>
 
       <Tabs defaultValue='overview' className='space-y-4'>
         <div className='flex items-center justify-between'>
           <TabsList>
-            <TabsTrigger value='overview'>Overview</TabsTrigger>
-            <TabsTrigger value='users'>Users</TabsTrigger>
-            <TabsTrigger value='llm'>LLM Providers</TabsTrigger>
+            <TabsTrigger value='overview' className='cursor-pointer'>
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value='users' className='cursor-pointer'>
+              Users
+            </TabsTrigger>
+            <TabsTrigger value='llm' className='cursor-pointer'>
+              LLM Providers
+            </TabsTrigger>
           </TabsList>
         </div>
 

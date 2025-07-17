@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import useAuth from '@/utils/hooks/useAuth';
 import { usersApi } from '@/api/users/users';
 import { llmsApi } from '@/api/llms/llms';
+import { llmModelsApi } from '@/api/llms-model/llms-model';
 import { useEffect, useState } from 'react';
 
 export function Sidebar() {
@@ -52,7 +53,8 @@ export function Sidebar() {
 
   const [usersCount, setUsersCount] = useState(0);
   const [llmsCount, setLlmsCount] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [llmModelsCount, setLlmModelsCount] = useState(0);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -64,17 +66,32 @@ export function Sidebar() {
         console.error('Failed to load users:', error);
       }
     };
+
     const fetchLlms = async () => {
       try {
         const fetchedLlms = await llmsApi.getLlms();
+        console.log('Fetched LLMs:', fetchedLlms);
         setLlmsCount(fetchedLlms.length);
         console.log('LLMs loaded:', fetchedLlms.length);
       } catch (error) {
         console.error('Failed to load LLMs:', error);
       }
     };
+
+    const fetchLlmModels = async () => {
+      try {
+        const fetchedLlmModels = await llmModelsApi.getLlmModels();
+        console.log('Fetched LLM Models:', fetchedLlmModels);
+        setLlmModelsCount(fetchedLlmModels.length);
+        console.log('LLM Models loaded:', fetchedLlmModels.length);
+      } catch (error) {
+        console.error('Failed to load LLM Models:', error);
+      }
+    };
+
     fetchUsers();
     fetchLlms();
+    fetchLlmModels();
     setLoading(false);
   }, []);
 
@@ -87,10 +104,16 @@ export function Sidebar() {
       badge: usersCount > 0 ? usersCount : 0,
     },
     {
-      name: 'LLM',
-      href: '/admin/dashboard/llm',
+      name: 'LLM Providers',
+      href: '/admin/dashboard/llms',
       icon: Bot,
       badge: llmsCount > 0 ? llmsCount : 0,
+    },
+    {
+      name: 'LLM Models',
+      href: '/admin/dashboard/llm-models',
+      icon: Bot,
+      badge: llmModelsCount > 0 ? llmModelsCount : 0,
     },
   ];
 

@@ -181,6 +181,11 @@ INSERT INTO `llms` (`name`, `slug`, `created_at`, `updated_at`) VALUES
 ('Anthropic', 'anthropic', NOW(), NOW()),
 ('Google', 'google', NOW(), NOW()),
 ('Meta', 'meta', NOW(), NOW());
+-- Ajout Gemini, ChatGPT, Mistral
+INSERT INTO `llms` (`name`, `slug`, `created_at`, `updated_at`) VALUES
+('Gemini', 'gemini', NOW(), NOW()),
+('ChatGPT', 'chatgpt', NOW(), NOW()),
+('Mistral', 'mistral', NOW(), NOW());
 
 INSERT INTO `llm_models` (`llm_id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
 (1, 'GPT-4', 'gpt-4', NOW(), NOW()),
@@ -192,6 +197,21 @@ INSERT INTO `llm_models` (`llm_id`, `name`, `slug`, `created_at`, `updated_at`) 
 (3, 'Gemini Pro', 'gemini-pro', NOW(), NOW()),
 (3, 'Gemini Flash', 'gemini-flash', NOW(), NOW()),
 (4, 'Llama 3.1', 'llama-3-1', NOW(), NOW());
+
+-- Modèles pour Gemini (llm_id à adapter selon la table llms)
+INSERT INTO `llm_models` (`llm_id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
+(5, 'Google: Gemini 2.5 Flash', 'google/gemini-2.5-flash', NOW(), NOW()),
+(5, 'Google: Gemini 2.5 Pro', 'google/gemini-2.5-pro', NOW(), NOW()),
+(5, 'Google: Gemma 3 27B (free)', 'google/gemma-3-27b-it:free', NOW(), NOW());
+
+-- Modèles pour ChatGPT (llm_id à adapter selon la table llms)
+INSERT INTO `llm_models` (`llm_id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
+(6, 'GPT-4.1', 'gpt-4-1-2025-04-14', NOW(), NOW()),
+(6, 'GPT-4o', 'gpt-4o-2025-11-20', NOW(), NOW());
+
+-- Modèles pour Mistral (llm_id à adapter selon la table llms)
+INSERT INTO `llm_models` (`llm_id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
+(7, 'Mistral: Mistral Small 3.2 24B (free)', 'mistralai/mistral-small-3.2-24b-instruct:free', NOW(), NOW());
 
 INSERT INTO `llm_user` (`user_id`, `llm_id`, `api_key`, `created_at`, `updated_at`) VALUES
 (1, 1, 'sk-test-openai-key-admin-bahloul', NOW(), NOW()),

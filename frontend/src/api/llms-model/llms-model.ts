@@ -1,14 +1,14 @@
 import type {
-  Llm,
-  CreateLlmRequest,
-  UpdateLlmRequest,
-} from '@/utils/types/llm';
+  LlmModel,
+  CreateLlmModelRequest,
+  UpdateLlmModelRequest,
+} from '@/utils/types/llm-model';
 
 const API_BASE_URL = 'http://localhost:3000';
 
-export const llmsApi = {
-  async getLlms(): Promise<Llm[]> {
-    const response = await fetch(`${API_BASE_URL}/llm`, {
+export const llmModelsApi = {
+  async getLlmModels(): Promise<LlmModel[]> {
+    const response = await fetch(`${API_BASE_URL}/llm-model`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -24,8 +24,8 @@ export const llmsApi = {
     return llms;
   },
 
-  async getLlm(id: number): Promise<Llm> {
-    const response = await fetch(`${API_BASE_URL}/llm/${id}`, {
+  async getLlmModelById(id: number): Promise<LlmModel> {
+    const response = await fetch(`${API_BASE_URL}/llm-model/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -41,8 +41,8 @@ export const llmsApi = {
     return data.data || data;
   },
 
-  async createLlm(llmData: CreateLlmRequest): Promise<Llm> {
-    const response = await fetch(`${API_BASE_URL}/llm`, {
+  async createLlmModel(llmData: CreateLlmModelRequest): Promise<LlmModel> {
+    const response = await fetch(`${API_BASE_URL}/llm-model`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -59,8 +59,11 @@ export const llmsApi = {
     return data.data || data;
   },
 
-  async updateLlm(id: number, llmData: UpdateLlmRequest): Promise<Llm> {
-    const response = await fetch(`${API_BASE_URL}/llm/${id}`, {
+  async updateLlmModel(
+    id: number,
+    llmData: UpdateLlmModelRequest
+  ): Promise<LlmModel> {
+    const response = await fetch(`${API_BASE_URL}/llm-model/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -77,8 +80,8 @@ export const llmsApi = {
     return data.data || data;
   },
 
-  async deleteLlm(id: number): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/llm/${id}`, {
+  async deleteLlmModel(id: number): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/llm-model/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

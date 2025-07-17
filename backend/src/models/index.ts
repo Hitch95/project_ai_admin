@@ -63,19 +63,4 @@ async function loadModels() {
 
 await loadModels();
 
-async function associationsModels() {
-    if (db.Llm && db.LlmModel) {
-        db.Llm.belongsTo(db.LlmModel, {
-            foreignKey: 'llm_model_id',
-            as: 'llmModel',
-        });
-        db.LlmModel.hasMany(db.Llm, {
-            foreignKey: 'llm_model_id',
-            as: 'llms',
-        });
-    }
-}
-
-await associationsModels()
-
 export default db;
