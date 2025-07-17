@@ -36,6 +36,7 @@ jobs:
         with:
           node-version: '24.4.1'
           cache: 'yarn'
+          cache-dependency-path: backend/yarn.lock
       - name: Install dependencies
         run: yarn install --frozen-lockfile
         working-directory: backend
