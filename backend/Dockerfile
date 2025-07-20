@@ -1,4 +1,4 @@
-FROM node:24.0.1-alpine
+FROM node:24.4.1-alpine
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ RUN corepack enable && corepack prepare yarn@4.6.0 --activate
 COPY package.json yarn.lock* ./
 
 RUN corepack prepare yarn@4.6.0 --activate
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable --node-modules
 
 COPY . .
 
