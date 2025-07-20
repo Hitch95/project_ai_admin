@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import LlmService from '../services/llm.service';
+import LlmService from '../services/llm.service.js';
 
 class LlmController {
   static async createLlm(req: Request, res: Response): Promise<void> {

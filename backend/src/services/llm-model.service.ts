@@ -2,8 +2,9 @@ import {
   CreateLlmModelDTO,
   LlmModelDto,
   UpdateLlmModelDTO,
-} from '../types/llm-model';
-import db from '..//models/index';
+} from '../types/llm-model.js';
+import db from '..//models/index.js';
+
 const { LlmModel } = db;
 
 export class LlmModelService {

@@ -1,6 +1,7 @@
-import db from '../models/index';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
+
+import db from '../models/index.js';
 
 const { User, Llm } = db;
 

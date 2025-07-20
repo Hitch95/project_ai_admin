@@ -1,6 +1,6 @@
 import http from 'http';
 import dotenv from 'dotenv';
-import app from './main';
+import app from './main.js';
 
 dotenv.config();
 

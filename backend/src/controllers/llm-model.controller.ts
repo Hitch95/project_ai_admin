@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { LlmModelService } from '../services/llm-model.service';
+import { LlmModelService } from '../services/llm-model.service.js';
 
 class LlmModelController {
   static async getAllModels(req: Request, res: Response): Promise<void> {

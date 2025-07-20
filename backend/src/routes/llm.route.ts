@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
-import LlmController from '../controllers/llm.controller';
-import { validateLlmInput } from '../middleware/validators';
+
+import LlmController from '../controllers/llm.controller.js';
+import { validateLlmInput } from '../middleware/validators.js';
 
 const router = express.Router();
 

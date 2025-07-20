@@ -1,3 +1,4 @@
-import { register } from "node:module";
-
-register("ts-node/esm", import.meta.url);
+// @ts-expect-error
+import { register } from 'node:module';
+// console.log(register);
+register('ts-node/esm', import.meta.url);

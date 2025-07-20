@@ -1,7 +1,8 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes, Sequelize } from 'sequelize';
+
 export default (sequelize: Sequelize) => {
   const Llm = sequelize.define(
-    "Llm",
+    'Llm',
     {
       id: {
         type: DataTypes.BIGINT.UNSIGNED,
@@ -28,15 +29,13 @@ export default (sequelize: Sequelize) => {
       },
     },
     {
-      tableName: "llms",
+      tableName: 'llms',
       timestamps: true,
-      createdAt: "created_at",
-      updatedAt: "updated_at",
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
       underscored: true,
     }
   );
-
-
 
   return Llm;
 };
