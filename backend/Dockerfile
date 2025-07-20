@@ -2,10 +2,11 @@ FROM node:24.4.1-alpine
 
 WORKDIR /app
 
+# Enable Corepack and prepare Yarn
 RUN corepack enable && corepack prepare yarn@4.6.0 --activate
-COPY package.json yarn.lock* ./
-
-RUN corepack prepare yarn@4.6.0 --activate
+# Copy package files and Yarn configuration
+COPY package.json yarn.lock* .yarnrc.yml* ./
+# Install dependencies using Yarn
 RUN yarn install --immutable
 
 COPY . .
