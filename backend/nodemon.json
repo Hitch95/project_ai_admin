@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ignore": ["src/**/*.spec.ts"],
+  "ext": "ts, html, css, ejs, json",
+  "exec": "node --import ./loader.ts --require tsconfig-paths/register --experimental-specifier-resolution=node ./src/server.ts"
+}

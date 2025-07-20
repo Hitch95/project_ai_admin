@@ -3,7 +3,7 @@ import {
   LlmModelDto,
   UpdateLlmModelDTO,
 } from '../types/llm-model';
-import db from '@/models/index';
+import db from '..//models/index';
 const { LlmModel } = db;
 
 export class LlmModelService {
