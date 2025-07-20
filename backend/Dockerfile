@@ -9,11 +9,14 @@ COPY package.json yarn.lock* .yarnrc.yml* ./
 # Install dependencies using Yarn
 RUN yarn install --immutable
 
+# Copy all the source code
 COPY . .
 
-EXPOSE 3000
+# Build the application
+RUN yarn build
 
+# Expose the application port
+EXPOSE 3000
 ENV NODE_ENV=production
 ENV PORT=3000
-
 CMD ["yarn", "start"]
