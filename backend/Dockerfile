@@ -6,7 +6,7 @@ RUN corepack enable && corepack prepare yarn@4.6.0 --activate
 COPY package.json yarn.lock* ./
 
 RUN corepack prepare yarn@4.6.0 --activate
-RUN yarn install --immutable --node-modules
+RUN yarn install --immutable
 
 COPY . .
 
