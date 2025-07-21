@@ -18,8 +18,8 @@
     "strict": true,
     "skipLibCheck": true,
     "typeRoots": ["./src/types", "./node_modules/@types"],
-    "declaration": true,
-    "sourceMap": true,
+    "declaration": false,
+    "sourceMap": false,
     "allowImportingTsExtensions": false,
     "noEmit": false
   },
