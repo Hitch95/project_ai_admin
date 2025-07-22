@@ -1,4 +1,4 @@
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/api/auth/auth-client';
 import { useCallback } from 'react';
 
 const useAuth = () => {

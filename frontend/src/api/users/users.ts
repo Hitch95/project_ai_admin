@@ -6,7 +6,7 @@ const backendUrl =
 export const usersApi = {
   async getUsers(): Promise<User[]> {
     try {
-      const response = await fetch(`http://localhost:3000/users`, {
+      const response = await fetch(`${backendUrl}/users`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

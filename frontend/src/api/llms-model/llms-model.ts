@@ -4,11 +4,12 @@ import type {
   UpdateLlmModelRequest,
 } from '@/utils/types/llm-model';
 
-const API_BASE_URL = 'http://localhost:3000';
+const backendUrl =
+  import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:3000';
 
 export const llmModelsApi = {
   async getLlmModels(): Promise<LlmModel[]> {
-    const response = await fetch(`${API_BASE_URL}/llm-model`, {
+    const response = await fetch(`${backendUrl}/llm-model`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -25,7 +26,7 @@ export const llmModelsApi = {
   },
 
   async getLlmModelById(id: number): Promise<LlmModel> {
-    const response = await fetch(`${API_BASE_URL}/llm-model/${id}`, {
+    const response = await fetch(`${backendUrl}/llm-model/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ export const llmModelsApi = {
   },
 
   async createLlmModel(llmData: CreateLlmModelRequest): Promise<LlmModel> {
-    const response = await fetch(`${API_BASE_URL}/llm-model`, {
+    const response = await fetch(`${backendUrl}/llm-model`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ export const llmModelsApi = {
     id: number,
     llmData: UpdateLlmModelRequest
   ): Promise<LlmModel> {
-    const response = await fetch(`${API_BASE_URL}/llm-model/${id}`, {
+    const response = await fetch(`${backendUrl}/llm-model/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -81,7 +82,7 @@ export const llmModelsApi = {
   },
 
   async deleteLlmModel(id: number): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/llm-model/${id}`, {
+    const response = await fetch(`${backendUrl}/llm-model/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
