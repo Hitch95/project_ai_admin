@@ -170,11 +170,11 @@ CREATE TABLE `llm_user` (
 SET FOREIGN_KEY_CHECKS = 1;
 
 /* 📊 Données de test */
-INSERT INTO `users` (`name`, `email`, `password`, `is_admin`) VALUES
-('Bahloul Admin', 'bahloul.admin@example.com', '$2b$10$MiEB6D/rxPQl0dKYNng7/Oag4AIJ.0Lrl4YlwWXE97vu6APtEzgAy', true),
-('Guillaume Admin', 'guillaume.admin@example.com', '$2b$10$MiEB6D/rxPQl0dKYNng7/Oag4AIJ.0Lrl4YlwWXE97vu6APtEzgAy', true),
-('Dan User', 'dan.user@example.com', '$2b$10$54h6CgJXjtSPHeYUhpZk7OOuc.MSn64w4F0TDJ1FKl0JwJeHR7uJS', false),
-('Test User Laravel', 'test.laravel@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', false);
+INSERT INTO `user` (`name`, `email`, `password`) VALUES
+('Bahloul Admin', 'bahloul.condorcet@gmail.com', '$2a$12$SnSuRJs0FTkwMG2WwKiSFeezlDZAwjGtSOiTG/a8mo9fX4F1OvOyi'),
+('Guillaume Admin', 'guillaume.admin@example.com', '$2b$10$MiEB6D/rxPQl0dKYNng7/Oag4AIJ.0Lrl4YlwWXE97vu6APtEzgAy'),
+('Dan User', 'dan.user@example.com', '$2b$10$54h6CgJXjtSPHeYUhpZk7OOuc.MSn64w4F0TDJ1FKl0JwJeHR7uJS'),
+('Test User Laravel', 'test.laravel@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
 
 INSERT INTO `llms` (`name`, `slug`, `created_at`, `updated_at`) VALUES
 ('OpenAI', 'openai', NOW(), NOW()),

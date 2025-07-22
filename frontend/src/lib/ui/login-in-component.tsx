@@ -14,6 +14,8 @@ const LoginUiComponent = () => {
   };
 
   const handleSignIn = async () => {
+    const backendUrl = import.meta.env.VITE_BACKEND_API_URL;
+
     if (!email || !password) {
       setError('Please enter both email and password.');
       return;
@@ -26,15 +28,12 @@ const LoginUiComponent = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        'http://localhost:3000/api/auth/sign-in/email',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-          credentials: 'include',
-        }
-      );
+      const response = await fetch(`${backendUrl}/api/auth/sign-in/email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+        credentials: 'include',
+      });
       const result = await response.json();
       if (response.ok && result.token) {
         // Stock le token ou redirige
@@ -78,6 +77,7 @@ const LoginUiComponent = () => {
                 placeholder='Email'
                 type='email'
                 value={email}
+                autoComplete='email'
                 className='w-full px-5 py-3 rounded-xl  bg-white/10 text-white placeholder-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400'
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -85,6 +85,7 @@ const LoginUiComponent = () => {
                 placeholder='Password'
                 type='password'
                 value={password}
+                autoComplete='current-password'
                 className='w-full px-5 py-3 rounded-xl  bg-white/10 text-white placeholder-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400'
                 onChange={(e) => setPassword(e.target.value)}
               />
