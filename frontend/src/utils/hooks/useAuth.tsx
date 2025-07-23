@@ -9,6 +9,14 @@ const useAuth = () => {
     refetch: refetchSession,
   } = authClient.useSession();
 
+  console.log('useAuth Debug: ', {
+    session,
+    isPending,
+    sessionError,
+    refetchSession,
+    isAuthenticated: !!session?.user,
+  });
+
   const { signIn } = authClient;
 
   const getSession = useCallback(async () => {

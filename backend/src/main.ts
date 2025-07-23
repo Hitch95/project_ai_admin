@@ -19,10 +19,45 @@ dotenv.config();
 
 const app: Express = express();
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL || 'http://localhost:5173',
+  process.env.BETTER_AUTH_URL || 'http://localhost:3000',
+  ...(process.env.NODE_ENV === 'production'
+    ? [
+        // Add production URLs here
+        'https://your-frontend-vercel-url.vercel.app',
+        'https://your-backend-render-url.onrender.com',
+      ]
+    : []),
+];
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: (origin, callback) => {
+      // Autoriser les requêtes sans origin (comme Postman) en développement
+      if (!origin && process.env.NODE_ENV !== 'production') {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.indexOf(origin || '') !== -1) {
+        callback(null, true);
+      } else {
+        console.warn(`CORS: Origin ${origin} not allowed`);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Cookie',
+      'X-Requested-With',
+      'Accept',
+      'Origin',
+    ],
+    exposedHeaders: ['Set-Cookie'],
+    maxAge: 86400, // 24 heures
   })
 );
 
@@ -41,6 +76,7 @@ app.all(
       const handler = toNodeHandler(auth);
       console.log('toNodeHandler created successfully');
       handler(req, res);
+      res.header('Access-Control-Allow-Credentials', 'true');
     } catch (error) {
       console.error('Better-Auth error : ', error);
       res.status(500).json({
