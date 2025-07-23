@@ -9,6 +9,8 @@ const useAuth = () => {
     refetch: refetchSession,
   } = authClient.useSession();
 
+  const { signIn } = authClient;
+
   const getSession = useCallback(async () => {
     try {
       const { data, error } = await authClient.getSession();
@@ -41,6 +43,7 @@ const useAuth = () => {
     isPending,
     sessionError,
     refetchSession,
+    signIn,
 
     // Imperative methods
     getSession, // Function to imperatively fetch the current session

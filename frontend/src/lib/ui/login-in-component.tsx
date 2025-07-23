@@ -3,13 +3,16 @@
 import { useState } from 'react';
 import { Spinner } from '@/components/ui/spinner';
 
-import { authClient } from '@/api/auth/auth-client';
+import useAuth from '@/utils/hooks/useAuth';
 
 const LoginUiComponent = () => {
+  // useStates
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const { signIn } = useAuth();
 
   const validateEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -28,7 +31,7 @@ const LoginUiComponent = () => {
     setLoading(true);
 
     try {
-      const result = await authClient.signIn.email({
+      const result = await signIn.email({
         email,
         password,
       });
