@@ -8,10 +8,10 @@ const BACKEND_URL = process.env.BETTER_AUTH_URL || 'http://localhost:3000';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-console.log('🔧 Better-Auth Configuration:');
-console.log('- Backend URL:', BACKEND_URL);
-console.log('- Frontend URL:', FRONTEND_URL);
-console.log('- Production mode:', IS_PRODUCTION);
+// console.log('🔧 Better-Auth Configuration:');
+// console.log('- Backend URL:', BACKEND_URL);
+// console.log('- Frontend URL:', FRONTEND_URL);
+// console.log('- Production mode:', IS_PRODUCTION);
 
 export const auth = betterAuth({
   database: createPool({
@@ -48,9 +48,9 @@ export const auth = betterAuth({
   },
 
   advanced: {
-    // Autorise les cookies cross-subdomain pour Render
+    // Allow cross-subdomain cookies for Render
     crossSubDomainCookies: { enabled: true },
-    // Attributs globaux pour tous les cookies Better Auth
+    // Global attributes for all Better Auth cookies
     defaultCookieAttributes: {
       sameSite: 'none',
       secure: true,
