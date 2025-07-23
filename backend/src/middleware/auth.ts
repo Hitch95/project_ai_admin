@@ -15,7 +15,7 @@ export const requireAuth = async (
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    // Vérifier que l'utilisateur est admin
+    // Verify if the user is an admin
     if (!session.user.is_admin) {
       return res.status(403).json({ error: 'Admin access required' });
     }

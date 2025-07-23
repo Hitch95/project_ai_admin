@@ -8,10 +8,6 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "https://project-ai-admin.onrender.com/api/$1"
-    },
-    {
       "src": "/(.*\\.(png|jpg|jpeg|gif|svg|webp|css|js))",
       "dest": "/$1"
     },
