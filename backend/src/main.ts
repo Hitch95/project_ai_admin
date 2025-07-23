@@ -9,6 +9,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerSpecs from './swaggerConfig.js';
 
 import db from './models/index.js';
+import authRoutes from './routes/auth.route.js';
 import userRoutes from './routes/user.routes.js';
 import LlmRoutes from './routes/llm.route.js';
 import LlmModelRoutes from './routes/llm-model.routes.js'; // Ajout des routes des modèles LLM
@@ -91,6 +92,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 app.get('/api/test-session', testSessionHandler);
 
 // Routes
+app.use('/api/login', authRoutes);
 app.use('/users', userRoutes);
 app.use('/llm', LlmRoutes);
 app.use('/llm-model', LlmModelRoutes); // Ajout des routes des modèles LLM

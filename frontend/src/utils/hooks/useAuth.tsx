@@ -1,5 +1,5 @@
 import { authClient } from '@/api/auth/auth-client';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 const useAuth = () => {
   const {
@@ -9,13 +9,15 @@ const useAuth = () => {
     refetch: refetchSession,
   } = authClient.useSession();
 
-  console.log('useAuth Debug: ', {
-    session,
-    isPending,
-    sessionError,
-    refetchSession,
-    isAuthenticated: !!session?.user,
-  });
+  useEffect(() => {
+    console.log('useAuth Debug: ', {
+      session,
+      isPending,
+      sessionError,
+      refetchSession,
+      isAuthenticated: !!session?.user,
+    });
+  }, [session, isPending, sessionError, refetchSession]);
 
   const { signIn } = authClient;
 

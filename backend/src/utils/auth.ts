@@ -48,6 +48,15 @@ export const auth = betterAuth({
   },
 
   advanced: {
+    // Autorise les cookies cross-subdomain pour Render
+    crossSubDomainCookies: { enabled: true },
+    // Attributs globaux pour tous les cookies Better Auth
+    defaultCookieAttributes: {
+      sameSite: 'none',
+      secure: true,
+      httpOnly: true,
+      path: '/',
+    },
     cookies: {
       sessionToken: {
         name: 'better-auth.session-token',
