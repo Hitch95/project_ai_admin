@@ -13,6 +13,7 @@ import LlmModels from '@/pages/LlmModels/LlmModels';
 import LlmModelDetail from '@/pages/LlmModels/LlmModelDetail';
 import ProfileSettings from './pages/Settings/Profile';
 import useAuth from './utils/hooks/useAuth';
+import SessionTestComponent from './components/SessionTestComponent';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -95,7 +96,15 @@ export function AppRoutes() {
         }
       >
         {/* Dashboard home page */}
-        <Route index element={<Home />} />
+        <Route
+          index
+          element={
+            <>
+              <Home />
+              <SessionTestComponent />
+            </>
+          }
+        />
         <Route path='users' element={<User />} />
         <Route path='user/:id' element={<UserDetail />} />
         <Route path='llms' element={<Llm />} />

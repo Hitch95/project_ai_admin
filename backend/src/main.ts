@@ -13,17 +13,46 @@ import userRoutes from './routes/user.routes.js';
 import LlmRoutes from './routes/llm.route.js';
 import LlmModelRoutes from './routes/llm-model.routes.js'; // Ajout des routes des modèles LLM
 import { auth } from './utils/auth.js'; // Import the auth configuration
+import { testSessionHandler } from './test-session.js'; // Import test handler
 
 dotenv.config();
 
 const app: Express = express();
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL || 'http://localhost:5173',
+  process.env.BETTER_AUTH_URL || 'http://localhost:3000',
+];
+
+console.log('🌐 CORS allowed origins:', allowedOrigins);
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: (origin, callback) => {
+      // Autoriser les requêtes sans origin (comme Postman) en développement
+      if (!origin && process.env.NODE_ENV !== 'production') {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.indexOf(origin || '') !== -1) {
+        callback(null, true);
+      } else {
+        console.warn(`❌ CORS: Origin ${origin} not allowed`);
+        console.warn('Allowed origins:', allowedOrigins);
+        callback(null, false); // Ne pas rejeter complètement, juste refuser
+      }
+    },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Cookie',
+      'X-Requested-With',
+      'Accept',
+      'Origin',
+    ],
+    exposedHeaders: ['Set-Cookie'],
   })
 );
 
@@ -57,6 +86,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Documentation Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+
+// Test endpoint pour débogger les sessions
+app.get('/api/test-session', testSessionHandler);
 
 // Routes
 app.use('/users', userRoutes);

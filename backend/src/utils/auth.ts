@@ -33,7 +33,7 @@ export const auth = betterAuth({
   },
 
   session: {
-    expiresIn: 60 * 60 * 24, // 24 hours
+    expiresIn: 60 * 60 * 24, // 24h
     updateAge: 60 * 60, // 1 hour
     cookieName: 'better-auth.session-token',
   },
@@ -52,12 +52,11 @@ export const auth = betterAuth({
       sessionToken: {
         name: 'better-auth.session-token',
         attributes: {
-          sameSite: 'none',
+          sameSite: IS_PRODUCTION ? 'none' : 'lax',
           secure: IS_PRODUCTION,
           httpOnly: true,
-          domain: IS_PRODUCTION ? undefined : 'localhost',
           path: '/',
-          maxAge: 60 * 60 * 24,
+          maxAge: 60 * 60 * 24, // 24h
         },
       },
     },
