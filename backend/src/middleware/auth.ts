@@ -15,25 +15,11 @@ export const requireAuth = async (
   try {
     console.log('🚀 Calling auth.api.getSession...');
 
-    // Debug: Créer un objet Request-like pour Better-Auth
-    const request = {
-      headers: req.headers,
-      cookies: req.cookies,
-      url: req.url,
-      method: req.method,
-    };
-
-    console.log('📋 Request object for Better-Auth:', {
-      hasCookieHeader: !!req.headers.cookie,
-      cookieValue: req.headers.cookie?.substring(0, 50) + '...',
-      origin: req.headers.origin,
-      referer: req.headers.referer,
-    });
-
     const session = await auth.api.getSession({
-      headers: req.headers as any,
+      headers: {
+        cookie: req.headers.cookie,
+      } as any,
     });
-
     console.log('📤 Better-Auth getSession result:', {
       hasSession: !!session,
       hasUser: !!session?.user,
