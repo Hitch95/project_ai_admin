@@ -9,19 +9,17 @@ interface CreateUserData {
   name: string;
   email: string;
   password: string;
-  is_admin?: boolean;
 }
 
 interface UpdateUserData {
   name?: string;
   email?: string;
   password?: string;
-  is_admin?: boolean;
 }
 
 class UserService {
   static async createUser(data: CreateUserData) {
-    const { name, email, password, is_admin = false } = data;
+    const { name, email, password } = data;
 
     // Check if the email already exists in the db
     const existingUser = await User.findOne({ where: { email } });
@@ -37,7 +35,6 @@ class UserService {
       name,
       email,
       password: hashedPassword,
-      is_admin,
       remember_token: rememberToken,
     });
 
@@ -65,7 +62,7 @@ class UserService {
   }
 
   static async updateUser(id: string | number, data: UpdateUserData) {
-    const { name, email, password, is_admin } = data;
+    const { name, email, password } = data;
 
     const userId = typeof id === 'string' ? parseInt(id, 10) : id;
 
@@ -91,7 +88,6 @@ class UserService {
 
     if (name !== undefined) updateData.name = name;
     if (email !== undefined) updateData.email = email;
-    if (is_admin !== undefined) updateData.is_admin = is_admin;
 
     if (password) {
       updateData.password = await bcrypt.hash(password, 10);

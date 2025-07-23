@@ -15,10 +15,6 @@ router.post(
     body('password')
       .isLength({ min: 6 })
       .withMessage('Password must be at least 6 characters'),
-    body('is_admin')
-      .optional()
-      .isBoolean()
-      .withMessage('is_admin must be a boolean'),
   ],
   checkValidationErrors,
   UserController.createUser
@@ -46,10 +42,6 @@ router.put(
       .optional()
       .isLength({ min: 6 })
       .withMessage('Password must be at least 6 characters'),
-    body('is_admin')
-      .optional()
-      .isBoolean()
-      .withMessage('is_admin must be a boolean'),
   ],
   checkValidationErrors,
   UserController.updateUser

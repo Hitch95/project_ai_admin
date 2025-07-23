@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Save, Shield, User as UserIcon } from 'lucide-react';
+import { ArrowLeft, Save, User as UserIcon } from 'lucide-react';
 import { usersApi } from '@/api/users/users';
 import type { User } from '@/utils/types/user';
 
@@ -60,21 +60,6 @@ const UserDetail = () => {
       alert('Failed to update user. Please try again.');
     } finally {
       setSaving(false);
-    }
-  };
-
-  const handlePromoteToAdmin = async () => {
-    if (!user || user.is_admin) return;
-
-    if (confirm(`Are you sure you want to promote ${user.name} to admin?`)) {
-      try {
-        await usersApi.promoteToAdmin(user.id);
-        setUser((prev) => (prev ? { ...prev, is_admin: true } : null));
-        alert('User promoted to admin successfully!');
-      } catch (error) {
-        console.error('Failed to promote user:', error);
-        alert('Failed to promote user to admin. Please try again.');
-      }
     }
   };
 
@@ -188,21 +173,8 @@ const UserDetail = () => {
             <div className='space-y-2'>
               <Label>Role</Label>
               <div className='flex items-center gap-2'>
-                {user.is_admin ? (
-                  <>
-                    <Shield className='h-4 w-4 text-blue-500' />
-                    <span className='text-sm font-medium text-blue-600'>
-                      Administrator
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <UserIcon className='h-4 w-4 text-gray-500' />
-                    <span className='text-sm font-medium text-gray-600'>
-                      User
-                    </span>
-                  </>
-                )}
+                <UserIcon className='h-4 w-4 text-gray-500' />
+                <span className='text-sm font-medium text-gray-600'>User</span>
               </div>
             </div>
 
@@ -231,20 +203,6 @@ const UserDetail = () => {
                 })}
               </div>
             </div>
-
-            {/* Admin Promotion */}
-            {!user.is_admin && (
-              <div className='pt-4 border-t'>
-                <Button
-                  variant='outline'
-                  onClick={handlePromoteToAdmin}
-                  className='w-full'
-                >
-                  <Shield className='h-4 w-4 mr-2' />
-                  Promote to Admin
-                </Button>
-              </div>
-            )}
           </CardContent>
         </Card>
       </div>

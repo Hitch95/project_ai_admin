@@ -42,14 +42,10 @@ export function CreateUserDialog({ onUserCreated }: CreateUserDialogProps) {
       name: formData.get('name') as string,
       email: formData.get('email') as string,
       password: formData.get('password') as string,
-      is_admin: false, // Default to false, can be changed later
     };
 
     try {
       await usersApi.createUser(userData);
-      // const form = e.currentTarget;
-      // form.reset();
-
       setOpen(false);
       onUserCreated();
     } catch (error) {
@@ -105,19 +101,6 @@ export function CreateUserDialog({ onUserCreated }: CreateUserDialogProps) {
                 required
               />
             </div>
-
-            {/* <div className='space-y-2'>
-              <Label htmlFor='role'>Role</Label>
-              <Select name='role' required>
-                <SelectTrigger id='role'>
-                  <SelectValue placeholder='Select user role' />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value='user'>Regular User</SelectItem>
-                  <SelectItem value='admin'>Administrator</SelectItem>
-                </SelectContent>
-              </Select>
-            </div> */}
           </div>
           <DialogFooter>
             <Button

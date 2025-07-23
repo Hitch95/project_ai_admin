@@ -5,7 +5,6 @@ export interface User {
   email_verified_at: string | null;
   password: string;
   remember_token: string | null;
-  is_admin: boolean;
   created_at: string;
   updated_at: string;
 }

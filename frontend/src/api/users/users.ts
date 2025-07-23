@@ -82,9 +82,7 @@ export const usersApi = {
       });
 
       if (!response.ok) throw new Error('Failed to create admin');
-
-      // 3. Mettre à jour is_admin = true dans table "users"
-      await this.updateUser(userId, { is_admin: true });
+      console.log(`User ${user.email} promoted to admin in Better-Auth table`);
     } catch (error) {
       console.error('Failed to promote user to admin:', error);
       throw error;

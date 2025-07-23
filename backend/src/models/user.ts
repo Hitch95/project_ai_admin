@@ -33,11 +33,6 @@ export default (sequelize: Sequelize, DataTypes: any) => {
         type: DataTypes.STRING(100),
         allowNull: true,
       },
-      is_admin: {
-        type: DataTypes.TINYINT(1),
-        allowNull: false,
-        defaultValue: 0,
-      },
       created_at: {
         type: DataTypes.DATE,
         allowNull: true,
