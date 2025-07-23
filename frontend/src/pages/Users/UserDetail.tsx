@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Save, User as UserIcon } from 'lucide-react';
+import { ArrowLeft, Save, User as UserIcon, Shield } from 'lucide-react';
 import { usersApi } from '@/api/users/users';
 import type { User } from '@/utils/types/user';
 
@@ -60,6 +60,22 @@ const UserDetail = () => {
       alert('Failed to update user. Please try again.');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handlePromoteToAdmin = async () => {
+    if (!user) return;
+
+    if (confirm(`Are you sure you want to promote ${user.name} to admin?`)) {
+      try {
+        await usersApi.promoteToAdmin(user.id);
+        alert(
+          `${user.name} has been promoted to admin! They can now login with their email and the default password.`
+        );
+      } catch (error) {
+        console.error('Failed to promote user:', error);
+        alert('Failed to promote user to admin. Please try again.');
+      }
     }
   };
 
@@ -202,6 +218,22 @@ const UserDetail = () => {
                   day: 'numeric',
                 })}
               </div>
+            </div>
+
+            {/* Admin Promotion */}
+            <div className='pt-4 border-t'>
+              <Button
+                variant='outline'
+                onClick={handlePromoteToAdmin}
+                className='w-full cursor-pointer bg-black text-white'
+              >
+                <Shield className='h-4 w-4 mr-2' />
+                Promote to Admin
+              </Button>
+              <p className='text-xs text-muted-foreground mt-2'>
+                This will create an admin account in Better-Auth with the same
+                email and name.
+              </p>
             </div>
           </CardContent>
         </Card>

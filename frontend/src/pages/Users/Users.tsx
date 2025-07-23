@@ -23,10 +23,6 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    loadUsers();
-  }, []);
-
   const loadUsers = async () => {
     try {
       const fetchedUsers = await usersApi.getUsers();
@@ -37,6 +33,10 @@ export default function Users() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
   const handleDeleteUser = async (id: number) => {
     if (confirm('Are you sure you want to delete this user?')) {

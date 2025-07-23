@@ -22,12 +22,6 @@ export default function LlmDetail() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (id) {
-      loadLlm(parseInt(id));
-    }
-  }, [id]);
-
   const loadLlm = async (llmId: number) => {
     try {
       const llmData = await llmsApi.getLlm(llmId);
@@ -43,6 +37,12 @@ export default function LlmDetail() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (id) {
+      loadLlm(parseInt(id));
+    }
+  }, [id]);
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData((prev) => ({

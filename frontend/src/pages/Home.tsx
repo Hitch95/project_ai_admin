@@ -15,9 +15,46 @@ import {
   Database,
   Shield,
 } from 'lucide-react';
+
+import { useEffect, useState } from 'react';
+import type { Llm as LlmType } from '@/utils/types/llm';
+
+import { type User as UserType } from '@/utils/types/user';
+import { llmsApi } from '@/api/llms/llms';
 import { DashboardChart } from '../lib/ui/dashboard-chart';
+import { usersApi } from '@/api/users/users';
 
 const Home = () => {
+  const [llms, setLlms] = useState<LlmType[]>([]);
+  const [users, setUsers] = useState<UserType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const fetchedUsers = await usersApi.getUsers();
+        setUsers(fetchedUsers);
+      } catch (error) {
+        console.error('Failed to load users:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const loadLlms = async () => {
+      try {
+        const fetchedLlms = await llmsApi.getLlms();
+        setLlms(fetchedLlms);
+      } catch (error) {
+        console.error('Failed to load LLMs:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadUsers();
+    loadLlms();
+  }, [loading]);
+
   return (
     <div className='flex flex-col gap-4'>
       <div>
@@ -51,14 +88,17 @@ const Home = () => {
                 <UsersIcon className='h-4 w-4 text-muted-foreground' />
               </CardHeader>
               <CardContent>
-                <div className='text-2xl font-bold'>3</div>
+                <div className='text-2xl font-bold'>
+                  {loading ? '...' : users.length}
+                </div>
                 <p className='text-xs text-muted-foreground'>
                   All registered users
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
+            {/* I will uncomment that when the fetch of admin will works well */}
+            {/* <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                 <CardTitle className='text-sm font-medium'>
                   Admin Users
@@ -71,7 +111,7 @@ const Home = () => {
                   Active administrators
                 </p>
               </CardContent>
-            </Card>
+            </Card> */}
 
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
@@ -81,7 +121,9 @@ const Home = () => {
                 <Database className='h-4 w-4 text-muted-foreground' />
               </CardHeader>
               <CardContent>
-                <div className='text-2xl font-bold'>3</div>
+                <div className='text-2xl font-bold'>
+                  {loading ? '...' : llms.length}
+                </div>
                 <p className='text-xs text-muted-foreground'>
                   Configured providers
                 </p>

@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/table';
 import { Search, Settings, Trash2, Plus, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
 import type { Llm as LlmType } from '@/utils/types/llm';
 import { llmsApi } from '@/api/llms/llms';
 
@@ -21,10 +22,6 @@ export default function Llm() {
   const [llms, setLlms] = useState<LlmType[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-    loadLlms();
-  }, []);
 
   const loadLlms = async () => {
     try {
@@ -36,6 +33,10 @@ export default function Llm() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadLlms();
+  }, []);
 
   const handleDeleteLlm = async (id: number) => {
     if (confirm('Are you sure you want to delete this LLM?')) {
