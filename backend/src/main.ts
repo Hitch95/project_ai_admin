@@ -19,47 +19,55 @@ dotenv.config();
 
 const app: Express = express();
 
-const allowedOrigins = [
-  process.env.FRONTEND_URL || 'http://localhost:5173',
-  process.env.BETTER_AUTH_URL || 'http://localhost:3000',
-  ...(process.env.NODE_ENV === 'production'
-    ? [
-        // Add production URLs here
-        'https://your-frontend-vercel-url.vercel.app',
-        'https://your-backend-render-url.onrender.com',
-      ]
-    : []),
-];
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log('🔍 CORS Check - Origin received:', origin);
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Autoriser les requêtes sans origin (comme Postman) en développement
-      if (!origin && process.env.NODE_ENV !== 'production') {
-        return callback(null, true);
-      }
+    // Liste des origines autorisées
+    const allowedOrigins = [
+      process.env.FRONTEND_URL,
+      'https://project-ai-admin.vercel.app',
+      // Ajoutez vos autres domaines si nécessaire
+    ];
 
-      if (allowedOrigins.indexOf(origin || '') !== -1) {
-        callback(null, true);
-      } else {
-        console.warn(`CORS: Origin ${origin} not allowed`);
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: [
-      'Content-Type',
-      'Authorization',
-      'Cookie',
-      'X-Requested-With',
-      'Accept',
-      'Origin',
-    ],
-    exposedHeaders: ['Set-Cookie'],
-    maxAge: 86400, // 24 heures
-  })
-);
+    // Autoriser les requêtes sans origin (Postman, curl, etc.) SEULEMENT en dev
+    if (!origin && process.env.NODE_ENV !== 'production') {
+      console.log('✅ CORS: No origin (dev mode) - ALLOWED');
+      return callback(null, true);
+    }
+
+    // Autoriser les requêtes sans origin en production pour certains cas spécifiques
+    // (comme les requêtes same-origin ou certains navigateurs)
+    if (!origin) {
+      console.log(
+        '⚠️ CORS: No origin in production - ALLOWED (same-origin assumed)'
+      );
+      return callback(null, true);
+    }
+
+    // Vérifier si l'origin est dans la liste autorisée
+    if (allowedOrigins.includes(origin)) {
+      console.log('✅ CORS: Origin allowed -', origin);
+      return callback(null, true);
+    }
+
+    console.log('❌ CORS: Origin not allowed -', origin);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Origin',
+    'X-Requested-With',
+    'Content-Type',
+    'Accept',
+    'Authorization',
+    'Cookie',
+  ],
+  exposedHeaders: ['Set-Cookie'],
+};
+
+app.use(cors(corsOptions));
 
 // app.all('/api/auth/{*any}', toNodeHandler(auth));
 
