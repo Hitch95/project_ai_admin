@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Spinner } from '@/components/ui/spinner';
 
+import { authClient } from '@/api/auth/auth-client';
+
 const LoginUiComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,8 +16,6 @@ const LoginUiComponent = () => {
   };
 
   const handleSignIn = async () => {
-    const backendUrl = import.meta.env.VITE_BACKEND_API_URL;
-
     if (!email || !password) {
       setError('Please enter both email and password.');
       return;
@@ -28,25 +28,19 @@ const LoginUiComponent = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${backendUrl}/api/auth/sign-in/email`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-        credentials: 'include',
+      const result = await authClient.signIn.email({
+        email,
+        password,
       });
-      const result = await response.json();
-      if (response.ok && result.token) {
-        // Stock le token ou redirige
-        localStorage.setItem('token', result.token);
-        localStorage.setItem('user', JSON.stringify(result.user));
 
+      if (result.data && result.data.user) {
         window.location.href = '/admin/dashboard';
       } else {
-        setError(result.error || 'Authentication failed.');
+        setError(result.error?.message || 'Authentication failed.');
       }
     } catch (err) {
-      console.error('Login error : ', err);
-      setError('Error occurred while logging in.');
+      console.error('Login error:', err);
+      setError('Network error. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
