@@ -20,6 +20,7 @@ dotenv.config();
 const app: Express = express();
 
 const corsOptions = {
+  // @ts-ignore
   origin: function (origin, callback) {
     console.log('🔍 CORS Check - Origin received:', origin);
 
