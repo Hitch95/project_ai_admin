@@ -58,7 +58,7 @@ export function DashboardChart() {
           />
           <Bar
             dataKey='total'
-            fill='hsl(var(--primary))'
+            fill='oklch(0.588 0.158 241.966)'
             radius={[4, 4, 0, 0]}
           />
         </BarChart>

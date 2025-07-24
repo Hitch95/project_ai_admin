@@ -50,12 +50,12 @@ const LoginUiComponent = () => {
   };
 
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center bg-[#121212] relative overflow-hidden w-full rounded-xl'>
+    <div className='min-h-screen flex flex-col items-center justify-center bg-[#23272f] text-black relative overflow-hidden w-full rounded-xl bg-gray-200'>
       {/* Centered glass card */}
-      <div className='relative z-10 w-full max-w-sm rounded-3xl bg-gradient-to-r from-[#ffffff10] to-[#121212] backdrop-blur-sm  shadow-2xl p-8 flex flex-col items-center'>
+      <div className='relative z-10 w-full max-w-sm rounded-3xl bg-[#23272f] shadow-2xl p-8 flex flex-col items-center text-white'>
         {/* Logo */}
-        <div className='flex items-center justify-center w-12 h-12 rounded-full bg-white/20 mb-6 shadow-lg'>
-          <img src='/Ai_Icon.svg' className='color-white' />
+        <div className='flex items-center justify-center w-12 h-12 rounded-full bg-gray-200 mb-6 shadow-lg'>
+          <img src='/Ai_Icon.svg' className='w-8 h-8' />
         </div>
         {/* Title */}
         <h2 className='text-2xl font-semibold text-white mb-6 text-center'>
@@ -101,35 +101,6 @@ const LoginUiComponent = () => {
             </div>
           </div>
         )}
-      </div>
-      {/* User count and avatars */}
-      <div className='relative z-10 mt-12 flex flex-col items-center text-center'>
-        <p className='text-gray-400 text-sm mb-2'>
-          Join <span className='font-medium text-white'>thousands</span> of
-          students and researchers who are already using AIfactory.
-        </p>
-        <div className='flex'>
-          <img
-            src='https://randomuser.me/api/portraits/men/32.jpg'
-            alt='user'
-            className='w-8 h-8 rounded-full border-2 border-[#181824] object-cover'
-          />
-          <img
-            src='https://randomuser.me/api/portraits/women/44.jpg'
-            alt='user'
-            className='w-8 h-8 rounded-full border-2 border-[#181824] object-cover'
-          />
-          <img
-            src='https://randomuser.me/api/portraits/men/54.jpg'
-            alt='user'
-            className='w-8 h-8 rounded-full border-2 border-[#181824] object-cover'
-          />
-          <img
-            src='https://randomuser.me/api/portraits/women/68.jpg'
-            alt='user'
-            className='w-8 h-8 rounded-full border-2 border-[#181824] object-cover'
-          />
-        </div>
       </div>
     </div>
   );
