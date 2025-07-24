@@ -53,6 +53,9 @@ export function CreateLlmModelDialog({
     setOpen(isOpen);
     if (isOpen) {
       loadLlms();
+    } else {
+      // Reset form when closing
+      setSelectedLlmId('');
     }
   };
 
@@ -99,11 +102,7 @@ export function CreateLlmModelDialog({
           <div className='grid gap-4 py-4'>
             <div className='space-y-2'>
               <Label htmlFor='llm-select'>LLM Provider</Label>
-              <Select
-                value={selectedLlmId}
-                onValueChange={setSelectedLlmId}
-                required
-              >
+              <Select value={selectedLlmId} onValueChange={setSelectedLlmId}>
                 <SelectTrigger>
                   <SelectValue placeholder='Select an LLM provider' />
                 </SelectTrigger>

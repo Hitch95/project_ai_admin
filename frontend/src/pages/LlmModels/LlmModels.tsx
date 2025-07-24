@@ -10,27 +10,30 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Search, Settings, Trash2, Plus, Eye } from 'lucide-react';
+import { Search, Settings, Trash2, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { LlmModel } from '@/utils/types/llm-model';
 import { llmModelsApi } from '@/api/llms-model/llms-model';
+import { CreateLlmModelDialog } from '@/lib/ui/create-llm-model-dialog';
 
 const LlmModels = () => {
   const [models, setModels] = useState<LlmModel[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
+  const loadModels = async () => {
+    try {
+      const data = await llmModelsApi.getLlmModels();
+      setModels(data);
+    } catch (error) {
+      console.error('Failed to load LLM Models:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      try {
-        const data = await llmModelsApi.getLlmModels();
-        setModels(data);
-      } catch (error) {
-        console.error('Failed to load LLM Models:', error);
-      } finally {
-        setLoading(false);
-      }
-    })();
+    loadModels();
   }, []);
 
   const filteredModels = models.filter(
@@ -58,10 +61,7 @@ const LlmModels = () => {
             Manage Language Model Variants
           </p>
         </div>
-        <Button className='cursor-pointer'>
-          <Plus className='h-4 w-4 mr-2' />
-          Add LLM Model
-        </Button>
+        <CreateLlmModelDialog onLlmModelCreated={loadModels} />
       </div>
 
       <Card>
