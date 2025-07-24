@@ -12,11 +12,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Search, Settings, Trash2, Plus, Eye } from 'lucide-react';
+import { Search, Settings, Trash2, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import type { Llm as LlmType } from '@/utils/types/llm';
 import { llmsApi } from '@/api/llms/llms';
+import CreateLlmDialog from '@/lib/ui/create-llm-dialog';
 
 export default function Llm() {
   const [llms, setLlms] = useState<LlmType[]>([]);
@@ -74,10 +75,7 @@ export default function Llm() {
             Manage Language Learning Models
           </p>
         </div>
-        <Button className='cursor-pointer'>
-          <Plus className='h-4 w-4 mr-2' />
-          Add LLM Model
-        </Button>
+        <CreateLlmDialog onLlmCreated={loadLlms} />
       </div>
 
       <Card>
